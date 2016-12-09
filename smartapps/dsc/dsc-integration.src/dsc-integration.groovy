@@ -280,6 +280,7 @@ def ipaddrlookup(hostname) {
         uri:  'http://api.konvert.me',
 	path: "/forward-dns/${hostname}"
     ]
+    log.debug "${params.uri}${params.path}"
     try {
         httpGet(params) {resp ->
             log.debug "resp data: ${resp.data}"
