@@ -277,8 +277,8 @@ def sendUrl(url) {
 
 def ipaddrlookup(hostname) {
     def params = [
-        uri:  'http://http://api.konvert.me/forward-dns/',
-	path: "${hostname}"
+        uri:  'http://api.konvert.me',
+	path: "/forward-dns/${hostname}"
     ]
     try {
         httpGet(params) {resp ->
