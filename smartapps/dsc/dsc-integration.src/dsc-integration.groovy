@@ -262,12 +262,12 @@ def autoBypass() {
 }
 
 def sendUrl(url) {
-	def resolvip = ipaddrlookup("${settings.ip}")
+	def resolvedip = ipaddrlookup("${settings.ip}")
 	def result = new physicalgraph.device.HubAction(
         method: 'GET',
         path: "/api/alarm/${url}",
         headers: [
-            HOST: "${settings.ip}:${settings.port}"
+            HOST: "${resolvedip}:${settings.port}"
         ]
     )
 	sendHubCommand(result)
@@ -277,16 +277,18 @@ def sendUrl(url) {
 
 def ipaddrlookup(hostname) {
     def params = [
-        uri:  'http://api.konvert.me',
+    uri:  'http://api.konvert.me',
 	path: "/forward-dns/${hostname}"
     ]
     log.debug "${params.uri}${params.path}"
     try {
         httpGet(params) {resp ->
-            log.debug "resp data: ${resp.data}"
+//            log.debug "resp data: --${resp.data}--"
+			return "${resp.data}"
         }
     } catch (e) {
         log.error "error: $e"
+        return "${hostname}"
     }
 }
 
